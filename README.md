@@ -13,3 +13,15 @@ Default username is "root", password is "password", can be set by editing
 ENV MYSQL_ROOT_PASSWORD password
 
 on Dockerfile
+
+# Image Usage
+Clone repository on a folder, then build and execute.
+
+# Volumes
+If you want to mount local folder as volumes, you can use these parameters when running image:
+
+-v $localfolder/mysql-data:/var/lib/mysql \
+-v $localfolder/www-data:/var/www/html \
+-v $localfolder/nginx-logs:/var/log/nginx 
+
+to mount local mysql, www and nginx logs folder
