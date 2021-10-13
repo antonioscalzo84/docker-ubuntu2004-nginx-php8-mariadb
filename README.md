@@ -1,5 +1,8 @@
-# docker-ubuntu2004-nginx-php8-mariadb
-Docker Image based on Ubuntu 20.04, Ngninx, Php8.0 and MariaDB
+# Docker Ubuntu 20.04 Nginx Php8.0 MariaDB image
+Docker Image based on Ubuntu 20.04, Ngninx, Php8.0 and MariaDB, ready to use.
+
+Repository: https://github.com/antonioscalzo84/docker-ubuntu2004-nginx-php8-mariadb
+
 
 # Usage
 Start the Docker container and check the phpinfo() output on http://localhost:8080
