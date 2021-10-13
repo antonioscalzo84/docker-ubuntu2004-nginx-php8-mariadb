@@ -1,6 +1,17 @@
 # docker-ubuntu2004-nginx-php8-mariadb
 Docker Image based on Ubuntu 20.04, Ngninx, Php8.0 and MariaDB
 
+# Usage
+Start the Docker container and check the phpinfo() output on http://localhost:8080
+
+    docker run -p 8080:80 frecciadelsud836/ubuntu-nginx-php8-mariadb
+
+If you want to mount your own folder to be served by PHP-FPM & Nginx
+
+    docker run -p 8080:80 -v ~/my-local-wwwroot:/var/www/html frecciadelsud836/ubuntu-nginx-php8-mariadb
+
+You can also pull the docker image manually from https://hub.docker.com/r/frecciadelsud836/ubuntu-nginx-php8-mariadb
+
 # NGINX
 A default virtualhost is copied from support/nginx/default-vhosts.conf, with root folder /var/www/html
 
