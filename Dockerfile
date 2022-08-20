@@ -1,5 +1,5 @@
 # Download base image ubuntu 20.04
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 
 # LABEL about the custom image
 LABEL maintainer="antonio.scalzo84@gmail.com"
@@ -35,7 +35,6 @@ RUN mkdir /var/run/mysqld && chmod 777 /var/run/mysqld -R
 RUN apt-get -y install mariadb-server
 # install Node.js, Yarn and PHP
 RUN apt-get -y install nginx php8.1-fpm \
-                           php8.1-dev \
                            php8.1-mbstring \
                            php8.1-dom \
                            php8.1-curl \
@@ -46,21 +45,11 @@ RUN apt-get -y install nginx php8.1-fpm \
                            php8.1-bcmath \
                            php8.1-intl \
                            php8.1-mysql \
-                           libmagickwand-dev \
-                           libmagickcore-dev \
                            supervisor && \
     rm -rf /var/lib/apt/lists/* && \
     apt clean
 
 
-RUN curl -fsSL 'https://imagemagick.org/archive/ImageMagick.tar.gz' -o ImageMagick.tar.gz && \
-    tar xvzf ImageMagick.tar.gz && \
-	cd ImageMagick-* && ./configure && make && make install && /sbin/ldconfig /usr/local/lib && \
-	cd .. && rm -rf ImageMagick.tar.gz ImageMagick-* && \
-	POLICY_XML_LOCATION="$(find /usr/local/etc/ -name 'policy.xml')" && \
-	cp /files/imagemagick-policy.xml $POLICY_XML_LOCATION
-
-RUN pecl install imagick && docker-php-ext-enable imagick
 # Define the ENV variable
 ENV nginx_vhost /etc/nginx/sites-available/default
 ENV php_conf /etc/php/8.1/fpm/php.ini
