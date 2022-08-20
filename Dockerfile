@@ -34,23 +34,36 @@ RUN mkdir /var/run/mysqld && chmod 777 /var/run/mysqld -R
 
 RUN apt-get -y install mariadb-server
 # install Node.js, Yarn and PHP
-RUN apt-get -y install nginx php8.0-fpm \
-                           php8.0-mbstring \
-                           php8.0-dom \
-                           php8.0-curl \
-                           php8.0-simplexml \
-                           php8.0-gd \
-                           php8.0-zip \
-                           php8.0-sqlite3 \
-                           php8.0-bcmath \
-                           php8.0-intl \
-                           php8.0-mysql supervisor && \
+RUN apt-get -y install nginx php8.1-fpm \
+                           php8.1-dev \
+                           php8.1-mbstring \
+                           php8.1-dom \
+                           php8.1-curl \
+                           php8.1-simplexml \
+                           php8.1-gd \
+                           php8.1-zip \
+                           php8.1-sqlite3 \
+                           php8.1-bcmath \
+                           php8.1-intl \
+                           php8.1-mysql \
+                           libmagickwand-dev \
+                           libmagickcore-dev \
+                           supervisor && \
     rm -rf /var/lib/apt/lists/* && \
     apt clean
 
+
+RUN curl -fsSL 'https://imagemagick.org/archive/ImageMagick.tar.gz' -o ImageMagick.tar.gz && \
+    tar xvzf ImageMagick.tar.gz && \
+	cd ImageMagick-* && ./configure && make && make install && /sbin/ldconfig /usr/local/lib && \
+	cd .. && rm -rf ImageMagick.tar.gz ImageMagick-* && \
+	POLICY_XML_LOCATION="$(find /usr/local/etc/ -name 'policy.xml')" && \
+	cp /files/imagemagick-policy.xml $POLICY_XML_LOCATION
+
+RUN pecl install imagick && docker-php-ext-enable imagick
 # Define the ENV variable
 ENV nginx_vhost /etc/nginx/sites-available/default
-ENV php_conf /etc/php/8.0/fpm/php.ini
+ENV php_conf /etc/php/8.1/fpm/php.ini
 ENV nginx_conf /etc/nginx/nginx.conf
 ENV supervisor_conf /etc/supervisor/supervisord.conf
 
